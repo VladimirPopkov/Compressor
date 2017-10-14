@@ -5,8 +5,8 @@ import java.util.List;
 
 public class CodesForSymbols {
     private int mCount = 0;
-    List <Character> mListSymbols = new ArrayList<>();
-    List <String> mListCodes = new ArrayList<>();
+    private List <Character> mListSymbols = new ArrayList<>();
+    private List <String> mListCodes = new ArrayList<>();
 
     CodesForSymbols(String str){
         listOfSymbols(str);
@@ -43,5 +43,31 @@ public class CodesForSymbols {
         return tmp;
     }
 
-    public String getCod()
+    public String getCod(char aSymbol){
+        for (char symbol : mListSymbols){
+            if (symbol == aSymbol){
+                return mListCodes.get(mListSymbols.indexOf(symbol));
+            }
+        }
+        return "N";
+    }
+
+    public char getSynmols(String aCod){
+        for (String cod : mListCodes){
+            if (cod.equals(aCod)){
+                return mListSymbols.get(mListCodes.indexOf(cod));
+            }
+        }
+        return 'N';
+    }
+
+    public void printListCods(){
+        for (String cod : mListCodes)
+        System.out.print(cod);
+    }
+
+    public void printListSymbols(){
+        for (char symbol : mListSymbols)
+            System.out.print(symbol);
+    }
 }
