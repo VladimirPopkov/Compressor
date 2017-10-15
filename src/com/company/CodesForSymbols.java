@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CodesForSymbols {
-    private int mCount = 0;
     private List <Character> mListSymbols = new ArrayList<>();
     private List <String> mListCodes = new ArrayList<>();
 
@@ -15,23 +14,18 @@ public class CodesForSymbols {
 
     private void listOfSymbols(String aStr){
         for (int i = 0; i < aStr.length(); i++){
-            for (int j = 0; j < i; j++){
-                if (aStr.charAt(i) == aStr.charAt(j)){
-                    mCount++;
-                }
-            }
-            if (mCount == 0){
+            if (!mListSymbols.contains(aStr.charAt(i))){
                 mListSymbols.add(aStr.charAt(i));
             }
-            mCount = 0;
         }
     }
 
     private void listOfCodes(){
         for (int i = 0; i < mListSymbols.size(); i++) {
-            mListCodes.add(creationOfNull(Integer.toBinaryString((mListSymbols.size()-1)).length() -
-                                                     Integer.toBinaryString(i).length()) +
-                                                     Integer.toBinaryString(i));
+            String tmp = Integer.toBinaryString(i);
+            String nulls = creationOfNull(Integer.toBinaryString((mListSymbols.size()-1)).length() -
+                    tmp.length());
+            mListCodes.add(nulls + tmp);
         }
     }
 
@@ -44,30 +38,38 @@ public class CodesForSymbols {
     }
 
     public String getCod(char aSymbol){
-        for (char symbol : mListSymbols){
-            if (symbol == aSymbol){
-                return mListCodes.get(mListSymbols.indexOf(symbol));
-            }
+        int pos = mListSymbols.indexOf(aSymbol);
+        if (pos != -1) {
+            return mListCodes.get(pos);
+        } else {
+            return null;
         }
-        return "N";
     }
 
-    public char getSynmols(String aCod){
-        for (String cod : mListCodes){
-            if (cod.equals(aCod)){
-                return mListSymbols.get(mListCodes.indexOf(cod));
-            }
+    public Character getSynmols(String aCod){
+        int pos = mListCodes.indexOf(aCod);
+        if (pos != -1) {
+            return mListSymbols.get(pos);
+        } else {
+            return null;
         }
-        return 'N';
     }
 
     public void printListCods(){
         for (String cod : mListCodes)
-        System.out.print(cod);
+        System.out.print(cod + " ");
     }
 
     public void printListSymbols(){
         for (char symbol : mListSymbols)
             System.out.print(symbol);
+    }
+
+    public String encode(String aStr){
+        StringBuilder builder = new StringBuilder();
+        for (int i =0; i < aStr.length(); i++){
+            builder.append(getCod(aStr.charAt(i)));
+        }
+        return builder.toString();
     }
 }
