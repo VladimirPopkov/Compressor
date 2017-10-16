@@ -6,6 +6,7 @@ import java.util.List;
 public class CodesForSymbols {
     private List <Character> mListSymbols = new ArrayList<>();
     private List <String> mListCodes = new ArrayList<>();
+    private int codeSize;
 
     CodesForSymbols(String str){
         listOfSymbols(str);
@@ -18,13 +19,13 @@ public class CodesForSymbols {
                 mListSymbols.add(aStr.charAt(i));
             }
         }
+        codeSize = Integer.toBinaryString((mListSymbols.size()-1)).length();
     }
 
     private void listOfCodes(){
         for (int i = 0; i < mListSymbols.size(); i++) {
             String tmp = Integer.toBinaryString(i);
-            String nulls = creationOfNull(Integer.toBinaryString((mListSymbols.size()-1)).length() -
-                    tmp.length());
+            String nulls = creationOfNull(codeSize - tmp.length());
             mListCodes.add(nulls + tmp);
         }
     }
@@ -71,5 +72,9 @@ public class CodesForSymbols {
             builder.append(getCod(aStr.charAt(i)));
         }
         return builder.toString();
+    }
+
+    public String decode(String binary) {
+        return null;
     }
 }
